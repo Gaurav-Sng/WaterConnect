@@ -32,11 +32,10 @@ const vendorSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    orders:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Orders',
-        default:[],
-    },
+     orders: [{
+    type: mongoose.Schema.Types.ObjectId,  // Array of ObjectIds
+    ref: 'Order'
+  }],
     rating:{
         type:Number,
         default:2.2,
