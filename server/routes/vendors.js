@@ -36,7 +36,6 @@ router.put('/orders/:orderId/status', async (req, res) => {
 // Vendor dashboard
 router.get('/dashboard',authHandler, async (req, res) => {
   try {
-    console.log("hello u are in dashboard")
     const vendor = await vendors.findById(req.user._id).populate('orders');
     if (!vendor) return res.status(404).json({ message: 'Vendor not found' });
    console.log(vendor);
@@ -56,7 +55,7 @@ router.get('/dashboard',authHandler, async (req, res) => {
       avgRating
     };
 
-    res.status(200).json({ message: 'Vendor dashboard data', metrics });
+    res.status(200).json({ message: 'supplier dashboard data', metrics });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
@@ -74,7 +73,7 @@ router.patch('/profile', async (req, res) => {
     await vendor.save();
     res.status(200).json({ message: 'Profile updated successfully', vendor });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating vendor profile', error });
+    res.status(500).json({ message: 'Error updating supplier profile', error });
   }
 });
 

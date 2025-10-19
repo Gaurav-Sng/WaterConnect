@@ -1,7 +1,7 @@
 
 const roleMiddleware=(req,res,next)=>{
   const role=req.user.role;
-  const permittedRoles=['user','vendor'];
+  const permittedRoles=['user','supplier'];
   if(permittedRoles.includes(role)){
     next();
   }

@@ -19,8 +19,8 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ message: 'Email, password, and role are required' });
     }
 
-    if (!['user', 'vendor'].includes(role)) {
-      return res.status(400).json({ message: 'Role must be either "user" or "vendor"' });
+    if (!['user', 'supplier'].includes(role)) {
+      return res.status(400).json({ message: 'Role must be either "user" or "supplier"' });
     }
 
     // Check if email already exists
@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
     }
 
     const account = user || vendor;
-    const role = user ? 'user' : 'vendor';
+    const role = user ? 'user' : 'supplier';
 
     // Compare password
     const isMatch = await bcrypt.compare(password, account.password);

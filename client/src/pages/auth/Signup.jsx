@@ -89,7 +89,7 @@ export const Signup = () => {
     }
     setIsLoading(true);
 
-    axios.post('/auth/signup', {
+    axios.post('https://waterconnect.onrender.com/auth/signup', {
     email: formData.email,
     password: formData.password,
     role:selectedRole

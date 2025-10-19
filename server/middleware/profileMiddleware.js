@@ -17,7 +17,7 @@ const profileMiddleware=async (req,res,next)=>{
               return res.status(500).json({message:"something went wrong"});
         }
     }
-    else if(role==='vendor'){
+    else if(role==='supplier'){
         try{
             const vendor=await vendors.findById(req.user.id);
             if(!vendor) return res.status(403).json({message:'unauthorized access'});

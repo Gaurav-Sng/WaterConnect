@@ -21,7 +21,7 @@ app.use(cors({
 }));
 app.use('/auth',auth);
 app.use('/user',authHandler,user);
-app.use('/vendor',authHandler,vendor);
+app.use('/supplier',authHandler,vendor);
 app.use('/payment',payments);
 app.use('/order',orders);
 
