@@ -22,8 +22,8 @@ app.use(cors({
 app.use('/auth',auth);
 app.use('/user',authHandler,user);
 app.use('/supplier',authHandler,vendor);
-app.use('/payment',payments);
-app.use('/order',orders);
+app.use('/payment',authHandler,payments);
+app.use('/order',authHandler,orders);
 
 
 app.get('/',(req,res)=>{

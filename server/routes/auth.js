@@ -28,7 +28,7 @@ router.post('/signup', async (req, res) => {
     const existingVendor = await vendors.findOne({ email });
 
     if (existingUser || existingVendor) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(409).json({ message: 'User already exists' });
     }
 
     // Hash password
@@ -47,7 +47,7 @@ router.post('/signup', async (req, res) => {
 
     // Send token as HttpOnly cookie + response
     res.cookie('token', token, { httpOnly: true, sameSite: 'strict', maxAge: 3600000 });
-    return res.status(201).json({ message: `${role} created successfully`, token });
+    return res.status(201).json({ message: `${role} created successfully`, token,userId:newAccount._id });
 
   } catch (err) {
     console.error(err);
@@ -68,7 +68,7 @@ router.post('/login', async (req, res) => {
     const vendor = await vendors.findOne({ email });
 
     if (!user && !vendor) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(404).json({ message: 'Invalid credentials' });
     }
 
     const account = user || vendor;
@@ -77,7 +77,7 @@ router.post('/login', async (req, res) => {
     // Compare password
     const isMatch = await bcrypt.compare(password, account.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     // Generate JWT
@@ -85,8 +85,7 @@ router.post('/login', async (req, res) => {
 
     // Send token
     res.cookie('token', token, { httpOnly: true, sameSite: 'strict', maxAge: 3600000 });
-    return res.status(200).json({ message: 'Login successful', token });
-
+    return res.status(200).json({ message: 'Login successful', token,userId:account._id });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Internal server error' });

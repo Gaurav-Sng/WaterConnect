@@ -13,7 +13,7 @@ const authHandler = async (req, res, next) => {
         if (role === 'user') registered = await users.findById(id);
         else if (role === 'supplier') registered = await vendors.findById(id);
 
-        if (!registered) return res.status(403).json({ message: 'unauthorized access' });
+        if (!registered) return res.status(401).json({ message: 'unauthorized access' });
         req.user = registered; // attach full object for downstream routes
         next();
     } catch (err) {
