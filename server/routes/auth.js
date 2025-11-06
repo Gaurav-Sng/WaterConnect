@@ -17,7 +17,7 @@ const cookieOptions = process.env.NODE_ENV === 'production'
 
 router.post('/signup', async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { name,email, password, role } = req.body;
 
     // Validate inputs
     if (!email || !password || !role) {
@@ -41,15 +41,15 @@ router.post('/signup', async (req, res) => {
 
     let newAccount;
     if (role === 'user') {
-      newAccount = await users.create({ email, password: hashedPassword });
+      newAccount = await users.create({ name,email, password: hashedPassword });
     } else {
-      newAccount = await vendors.create({ email, password: hashedPassword });
+      newAccount = await vendors.create({ name,email, password: hashedPassword });
     }
 
     const token = generateToken(newAccount._id, role);
 
   res.cookie('token', token, cookieOptions);
-  return res.status(201).json({ message: `${role} created successfully`, token, userId: newAccount._id });
+  return res.status(201).json({ message: `${role} created successfully`, token, userId: newAccount._id,role });
 
   } catch (err) {
     console.error(err);

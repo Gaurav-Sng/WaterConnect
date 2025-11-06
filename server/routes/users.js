@@ -20,12 +20,12 @@ router.get('/me', async (req, res) => {
 // Update user info
 router.put('/update', async (req, res) => {
     try {
-        const { phone, address } = req.body;
+        const {name, phone, address } = req.body;
         const { _id } = req.user;
 
         const user = await users.findByIdAndUpdate(
             _id,
-            { phone, address },
+            { name, phone, address },
             { new: true } // return updated document
         ).select('-password');
 
