@@ -36,6 +36,10 @@ const vendorSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,  // Array of ObjectIds
     ref: 'Order'
   }],
+  bussinesssHours:{
+    type:String,
+    default:"9am to 9pm"
+  },
     rating:{
         type:Number,
         default:2.2,

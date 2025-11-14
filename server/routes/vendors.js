@@ -3,6 +3,22 @@ const vendors=require('../models/vendorModel');
 const orders=require('../models/orderModel');
 const authHandler = require('../middleware/authMiddleware');
 // GET all orders for this vendor
+router.get('/me',authHandler,async(req,res)=>{
+  try{
+    const vendorId=req.user._id;
+    const vendor=await vendors.findById(vendorId).select('-password');
+    if(!vendor){
+      res.send(404).json({message:'vendor not found'})
+    }
+    else{
+      res.status(200).json({vendor});//.select('-password')
+    }
+  }
+  catch(err){
+    res.status(500).json({message:'server error',error:err.message});
+  }
+});
+
 router.get('/orders', async (req, res) => {
   try {
     const vendor = await vendors.findById(req.user._id).populate('orders');
